@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,5 +39,17 @@ public class ProjectController {
     public ResponseEntity<?> findProjectByProjectIdentifier(@PathVariable String identifier){
         ProjectEntity project = projectService.findProjectByProjectIdentifier(identifier);
         return new ResponseEntity<ProjectEntity>(project, HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public Iterable<ProjectEntity> findAllProject(){
+
+        return projectService.findAllProject();
+    }
+
+    @DeleteMapping("/{identifier}")
+    public ResponseEntity<?> deleteProjectByIdentifier(@PathVariable String identifier){
+        projectService.deleteProjectByIdentifier(identifier);
+        return new ResponseEntity<String>("Project '"+identifier+"' was deleted!", HttpStatus.OK);
     }
 }
